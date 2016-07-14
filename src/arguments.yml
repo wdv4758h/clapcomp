@@ -1,0 +1,36 @@
+name: clapcomp
+version: 0.1.0
+about: clap completion generator as command
+author: Chiu-Hsiang Hsu <wdv4758h@gmail.com>
+
+settings:
+    - ArgRequiredElseHelp
+    - ColoredHelp
+
+args:
+    - format:
+        help: input format
+        long: format
+        short: f
+        takes_value: true
+        default_value: "yaml"
+        possible_values:
+            - yaml
+    - shell:
+        help: target shell for completion
+        long: shell
+        short: s
+        takes_value: true
+        possible_values:
+            - bash
+        default_value: "bash"
+    - output:
+        help: output directory
+        long: output
+        short: o
+        takes_value: true
+    - input:
+        help: input file
+        index: 1
+        takes_value: true
+        required: true
