@@ -164,6 +164,17 @@ x86_64, Linux (build on Arch Linux)
 +----------+---------+------------+--------------+-----------+
 
 
+x86_64, Linux, musl (build on Arch Linux)
+
++----------+---------+------------+--------------+-----------+
+| Filename | Version | Stripped ? | Size (Bytes) | Size (MB) |
++----------+---------+------------+--------------+-----------+
+| clapcomp | v0.1.0  | No         | 1454328      | 1.4M      |
++----------+---------+------------+--------------+-----------+
+| clapcomp | v0.1.0  | Yes        | 1129376      | 1.1M      |
++----------+---------+------------+--------------+-----------+
+
+
 Shared Library Dependency
 ------------------------------
 
@@ -179,6 +190,14 @@ x86_64, Linux (build on Arch Linux)
             libc.so.6 => /usr/lib/libc.so.6 (0x00007f958eb16000)
             /lib64/ld-linux-x86-64.so.2 (0x00007f958f4ee000)
             libm.so.6 => /usr/lib/libm.so.6 (0x00007f958e812000)
+
+
+x86_64, Linux, musl (build on Arch Linux)
+
+.. code-block:: sh
+
+    $ ldd ./target/x86_64-unknown-linux-musl/release/clapcomp
+            not a dynamic executable
 
 
 
