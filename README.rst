@@ -193,6 +193,15 @@ Not Implemented Yet (Plan)
 * support generate from raw help message
 
 
+v0.1.0 (2016-07-14)
+------------------------------
+
+Features
+++++++++++++++++++++
+
+* support `bash <https://www.gnu.org/software/bash/>`_ completion
+
+
 
 Notice
 ========================================
