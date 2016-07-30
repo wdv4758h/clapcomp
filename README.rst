@@ -38,10 +38,10 @@ Download Prebuilt Binary
 .. code-block:: sh
 
     # by curl
-    $ curl -O -J -L https://github.com/wdv4758h/clapcomp/releases/download/v0.1.0/clapcomp-v0.1.0-x86_64-unknown-linux-gnu.tar.gz
+    $ curl -O -J -L https://github.com/wdv4758h/clapcomp/releases/download/v0.1.1/clapcomp-v0.1.1-x86_64-unknown-linux-gnu.tar.gz
 
     # by wget
-    $ wget https://github.com/wdv4758h/clapcomp/releases/download/v0.1.0/clapcomp-v0.1.0-x86_64-unknown-linux-gnu.tar.gz
+    $ wget https://github.com/wdv4758h/clapcomp/releases/download/v0.1.1/clapcomp-v0.1.1-x86_64-unknown-linux-gnu.tar.gz
 
 
 
@@ -51,7 +51,7 @@ Usage
 .. code-block:: sh
 
     $ clapcomp --help
-    clapcomp 0.1.0
+    clapcomp 0.1.1
     Chiu-Hsiang Hsu <wdv4758h@gmail.com>
     clap completion generator as command
 
@@ -65,7 +65,8 @@ Usage
     OPTIONS:
         -f, --format <format>    input format [default: yaml]  [values: yaml]
         -o, --output <output>    output directory
-        -s, --shell <shell>      target shell for completion [default: bash]  [values: bash]
+        -s, --shell <shell>      target shell for completion [default: bash]  [values: bash,
+                                 fish]
 
     ARGS:
         <input>    input file
@@ -117,11 +118,11 @@ Usage
                         return 0
                         ;;
                     --shell)
-                        COMPREPLY=($(compgen -W "bash" -- ${cur}))
+                        COMPREPLY=($(compgen -W "bash fish" -- ${cur}))
                         return 0
                         ;;
                         -s)
-                        COMPREPLY=($(compgen -W "bash" -- ${cur}))
+                        COMPREPLY=($(compgen -W "bash fish" -- ${cur}))
                         return 0
                         ;;
                     --output)
@@ -146,6 +147,17 @@ Usage
     complete -F _clapcomp clapcomp
 
 
+.. code-block:: sh
+
+    # src/arguments.yml is this project's setting
+    $ clapcomp --shell fish src/arguments.yml
+    $ cat clapcomp.fish
+    complete -c clapcomp -s f -l format -d 'input format' -r -f -a 'yaml'
+    complete -c clapcomp -s s -l shell -d 'target shell for completion' -r -f -a 'bash fish'
+    complete -c clapcomp -s o -l output -d 'output directory'
+    complete -c clapcomp -s h -l help -d 'Prints help information'
+    complete -c clapcomp -s V -l version -d 'Prints version information'
+
 
 Information About Binary
 ========================================
@@ -158,9 +170,9 @@ x86_64, Linux (build on Arch Linux)
 +----------+---------+------------+--------------+-----------+
 | Filename | Version | Stripped ? | Size (Bytes) | Size (MB) |
 +----------+---------+------------+--------------+-----------+
-| clapcomp | v0.1.0  | No         | 1478960      | 1.5M      |
+| clapcomp | v0.1.1  | No         | 1453952      | 1.4M      |
 +----------+---------+------------+--------------+-----------+
-| clapcomp | v0.1.0  | Yes        | 1082120      | 1.1M      |
+| clapcomp | v0.1.1  | Yes        | 1089672      | 1.1M      |
 +----------+---------+------------+--------------+-----------+
 
 
@@ -169,9 +181,9 @@ x86_64, Linux, musl (build on Arch Linux)
 +----------+---------+------------+--------------+-----------+
 | Filename | Version | Stripped ? | Size (Bytes) | Size (MB) |
 +----------+---------+------------+--------------+-----------+
-| clapcomp | v0.1.0  | No         | 1454328      | 1.4M      |
+| clapcomp | v0.1.1  | No         | 1428512      | 1.4M      |
 +----------+---------+------------+--------------+-----------+
-| clapcomp | v0.1.0  | Yes        | 1129376      | 1.1M      |
+| clapcomp | v0.1.1  | Yes        | 1136928      | 1.1M      |
 +----------+---------+------------+--------------+-----------+
 
 
@@ -183,13 +195,11 @@ x86_64, Linux (build on Arch Linux)
 .. code-block:: sh
 
     $ ldd ./target/release/clapcomp
-            linux-vdso.so.1 (0x00007fffefdcb000)
-            libdl.so.2 => /usr/lib/libdl.so.2 (0x00007f958f2ea000)
-            libpthread.so.0 => /usr/lib/libpthread.so.0 (0x00007f958f0cd000)
-            libgcc_s.so.1 => /usr/lib/libgcc_s.so.1 (0x00007f958eeb7000)
-            libc.so.6 => /usr/lib/libc.so.6 (0x00007f958eb16000)
-            /lib64/ld-linux-x86-64.so.2 (0x00007f958f4ee000)
-            libm.so.6 => /usr/lib/libm.so.6 (0x00007f958e812000)
+            linux-vdso.so.1 (0x00007ffd8d5d1000)
+            libpthread.so.0 => /usr/lib/libpthread.so.0 (0x00007f8019d89000)
+            libgcc_s.so.1 => /usr/lib/libgcc_s.so.1 (0x00007f8019b73000)
+            libc.so.6 => /usr/lib/libc.so.6 (0x00007f80197d2000)
+            /lib64/ld-linux-x86-64.so.2 (0x00007f8019fa6000)
 
 
 x86_64, Linux, musl (build on Arch Linux)
@@ -207,9 +217,17 @@ Changelog
 Not Implemented Yet (Plan)
 ------------------------------
 
-* support `fish <https://fishshell.com/>`_ shell completion (waiting my PR for clap `#579 <https://github.com/kbknapp/clap-rs/pull/579>`_)
 * support `zsh <http://www.zsh.org/>`_
 * support generate from raw help message
+
+
+v0.1.1 (2016-07-30)
+------------------------------
+
+Features
+++++++++++++++++++++
+
+* support `fish <https://fishshell.com/>`_ shell completion
 
 
 v0.1.0 (2016-07-14)

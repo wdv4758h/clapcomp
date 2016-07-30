@@ -36,6 +36,7 @@ fn main() {
 
     let shell = match shell {
         "bash" => Shell::Bash,
+        "fish" => Shell::Fish,
         _ => unreachable!(),
     };
 
