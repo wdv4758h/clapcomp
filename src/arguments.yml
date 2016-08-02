@@ -25,11 +25,19 @@ args:
             - bash
             - fish
         default_value: "bash"
-    - output:
+    - outdir:
         help: output directory
-        long: output
+        long: outdir
+        short: d
+        takes_value: true
+    - outfile:
+        help: output file
+        long: outfile
         short: o
         takes_value: true
+    - stdout:
+        help: output result to STDOUT
+        long: stdout
     - input:
         help: input file
         index: 1

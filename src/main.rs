@@ -6,6 +6,7 @@ use clap::{YamlLoader, App, Shell};
 use std::path::Path;
 use std::fs::File;
 use std::io::prelude::*;    // read_to_string
+use std::io;
 
 
 fn main() {
@@ -20,13 +21,15 @@ fn main() {
     let format = arguments.value_of("format").unwrap();
     let shell = arguments.value_of("shell").unwrap();
     let file = arguments.value_of("input").unwrap();
-    let output = arguments.value_of("output").unwrap_or(".");
+    let outdir = arguments.value_of("outdir").unwrap_or(".");
+    let outfile = arguments.value_of("outfile").unwrap_or("");
+    let stdout = arguments.is_present("stdout");
 
     ////////////////////
     // Extra Checking
     ////////////////////
 
-    if !Path::new(output).is_dir() {
+    if !stdout && !Path::new(outdir).is_dir() {
         println!("You should pass in a exsiting directory");
     }
 
@@ -59,7 +62,17 @@ fn main() {
     // Generate Completion
     ////////////////////
 
-    app.gen_completions(name.as_str(),  // bin name
-                        shell,          // target shell
-                        output);        // writing path
+    if stdout {
+        app.gen_completions_to(name.as_str(),  // bin name
+                               shell,          // target shell
+                               &mut io::stdout());
+    } else if !outfile.is_empty() {
+        app.gen_completions_to(name.as_str(),  // bin name
+                               shell,          // target shell
+                               &mut File::create(outfile).unwrap());
+    } else {
+        app.gen_completions(name.as_str(),  // bin name
+                            shell,          // target shell
+                            outdir);        // writing path
+    }
 }

@@ -221,6 +221,12 @@ Not Implemented Yet (Plan)
 * support generate from raw help message
 
 
+v0.1.2
+------------------------------
+
+* support output to STDOUT and specific file
+
+
 v0.1.1 (2016-07-30)
 ------------------------------
 
