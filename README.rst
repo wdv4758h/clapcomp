@@ -224,7 +224,11 @@ Not Implemented Yet (Plan)
 v0.1.2
 ------------------------------
 
+Features
+++++++++++++++++++++
+
 * support output to STDOUT and specific file
+* support output multiple completion files at once
 
 
 v0.1.1 (2016-07-30)

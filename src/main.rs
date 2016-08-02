@@ -19,11 +19,14 @@ fn main() {
     let arguments = App::from_yaml(yml).get_matches();
 
     let format = arguments.value_of("format").unwrap();
-    let shell = arguments.value_of("shell").unwrap();
+    let mut shells = arguments.values_of("shell").unwrap().collect::<Vec<_>>();
     let file = arguments.value_of("input").unwrap();
     let outdir = arguments.value_of("outdir").unwrap_or(".");
     let outfile = arguments.value_of("outfile").unwrap_or("");
     let stdout = arguments.is_present("stdout");
+
+    shells.sort();
+    shells.dedup();
 
     ////////////////////
     // Extra Checking
@@ -31,17 +34,26 @@ fn main() {
 
     if !stdout && !Path::new(outdir).is_dir() {
         println!("You should pass in a exsiting directory");
+        panic!();
+    }
+
+    if shells.len() > 1 && !outfile.is_empty() {
+        println!("You shouldn't pass in mutiple shell with specific file");
+        panic!();
     }
 
     ////////////////////
     // Construct Application
     ////////////////////
 
-    let shell = match shell {
-        "bash" => Shell::Bash,
-        "fish" => Shell::Fish,
-        _ => unreachable!(),
-    };
+    let shells =
+        shells.iter()
+              .map(|s| match s {
+                    &"bash" => Shell::Bash,
+                    &"fish" => Shell::Fish,
+                    _ => unreachable!(),
+                 })
+              .collect::<Vec<_>>();
 
     let yaml;
     let mut app = match format {
@@ -62,17 +74,19 @@ fn main() {
     // Generate Completion
     ////////////////////
 
-    if stdout {
-        app.gen_completions_to(name.as_str(),  // bin name
-                               shell,          // target shell
-                               &mut io::stdout());
-    } else if !outfile.is_empty() {
-        app.gen_completions_to(name.as_str(),  // bin name
-                               shell,          // target shell
-                               &mut File::create(outfile).unwrap());
-    } else {
-        app.gen_completions(name.as_str(),  // bin name
-                            shell,          // target shell
-                            outdir);        // writing path
+    for shell in shells {
+        if stdout {
+            app.gen_completions_to(name.as_str(),  // bin name
+                                   shell,          // target shell
+                                   &mut io::stdout());
+        } else if !outfile.is_empty() {
+            app.gen_completions_to(name.as_str(),  // bin name
+                                   shell,          // target shell
+                                   &mut File::create(outfile).unwrap());
+        } else {
+            app.gen_completions(name.as_str(),  // bin name
+                                shell,          // target shell
+                                outdir);        // writing path
+        }
     }
 }

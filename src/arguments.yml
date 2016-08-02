@@ -25,6 +25,7 @@ args:
             - bash
             - fish
         default_value: "bash"
+        max_values: 2
     - outdir:
         help: output directory
         long: outdir
