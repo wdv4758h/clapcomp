@@ -38,10 +38,10 @@ Download Prebuilt Binary
 .. code-block:: sh
 
     # by curl
-    $ curl -O -J -L https://github.com/wdv4758h/clapcomp/releases/download/v0.1.1/clapcomp-v0.1.1-x86_64-unknown-linux-gnu.tar.gz
+    $ curl -O -J -L https://github.com/wdv4758h/clapcomp/releases/download/v0.1.3/clapcomp-v0.1.3-x86_64-unknown-linux-gnu.tar.gz
 
     # by wget
-    $ wget https://github.com/wdv4758h/clapcomp/releases/download/v0.1.1/clapcomp-v0.1.1-x86_64-unknown-linux-gnu.tar.gz
+    $ wget https://github.com/wdv4758h/clapcomp/releases/download/v0.1.3/clapcomp-v0.1.3-x86_64-unknown-linux-gnu.tar.gz
 
 
 
@@ -51,22 +51,23 @@ Usage
 .. code-block:: sh
 
     $ clapcomp --help
-    clapcomp 0.1.1
-    Chiu-Hsiang Hsu <wdv4758h@gmail.com>
+    clapcomp 0.1.3
     clap completion generator as command
 
     USAGE:
-        clapcomp [OPTIONS] <input>
+        clapcomp [FLAGS] [OPTIONS] <input>
 
     FLAGS:
         -h, --help       Prints help information
+            --stdout     output result to STDOUT
         -V, --version    Prints version information
 
     OPTIONS:
-        -f, --format <format>    input format [default: yaml]  [values: yaml]
-        -o, --output <output>    output directory
-        -s, --shell <shell>      target shell for completion [default: bash]  [values: bash,
-                                 fish]
+        -f, --format <format>      input format [default: yaml]  [values: yaml]
+        -d, --outdir <outdir>      output directory
+        -o, --outfile <outfile>    output file
+        -s, --shell <shell>        target shell for completion [default: bash]  [values: bash,
+                                   fish]
 
     ARGS:
         <input>    input file
@@ -75,8 +76,8 @@ Usage
 .. code-block:: sh
 
     # src/arguments.yml is this project's setting
-    $ clapcomp --shell bash src/arguments.yml
-    $ cat clapcomp_bash.sh
+    $ clapcomp src/arguments.yml --shell bash
+    $ cat clapcomp.bash-completion
     _clapcomp() {
         local i cur prev opts cmds
         COMPREPLY=()
@@ -102,7 +103,7 @@ Usage
 
         case "${cmd}" in
             clapcomp)
-                opts=" -f -s -o -h -V  --format --shell --output --help --version  <input> "
+                opts=" -f -s -d -o -h -V  --format --shell --outdir --outfile --stdout --help --version  <input> "
                 if [[ ${cur} == -* || ${COMP_CWORD} -eq 1 ]] ; then
                     COMPREPLY=( $(compgen -W "${opts}" -- ${cur}) )
                     return 0
@@ -125,12 +126,20 @@ Usage
                         COMPREPLY=($(compgen -W "bash fish" -- ${cur}))
                         return 0
                         ;;
-                    --output)
-                        COMPREPLY=("<output>")
+                    --outdir)
+                        COMPREPLY=("<outdir>")
+                        return 0
+                        ;;
+                        -d)
+                        COMPREPLY=("<outdir>")
+                        return 0
+                        ;;
+                    --outfile)
+                        COMPREPLY=("<outfile>")
                         return 0
                         ;;
                         -o)
-                        COMPREPLY=("<output>")
+                        COMPREPLY=("<outfile>")
                         return 0
                         ;;
                     *)
@@ -150,13 +159,28 @@ Usage
 .. code-block:: sh
 
     # src/arguments.yml is this project's setting
-    $ clapcomp --shell fish src/arguments.yml
+    $ clapcomp src/arguments.yml --shell fish
     $ cat clapcomp.fish
-    complete -c clapcomp -s f -l format -d 'input format' -r -f -a 'yaml'
-    complete -c clapcomp -s s -l shell -d 'target shell for completion' -r -f -a 'bash fish'
-    complete -c clapcomp -s o -l output -d 'output directory'
-    complete -c clapcomp -s h -l help -d 'Prints help information'
-    complete -c clapcomp -s V -l version -d 'Prints version information'
+    function __fish_using_command
+        set cmd (commandline -opc)
+        if [ (count $cmd) -eq (count $argv) ]
+            for i in (seq (count $argv))
+                if [ $cmd[$i] != $argv[$i] ]
+                    return 1
+                end
+            end
+            return 0
+        end
+        return 1
+    end
+
+    complete -c clapcomp -n "__fish_using_command clapcomp" -s f -l format -d "input format" -r -f -a "yaml"
+    complete -c clapcomp -n "__fish_using_command clapcomp" -s s -l shell -d "target shell for completion" -r -f -a "bash fish"
+    complete -c clapcomp -n "__fish_using_command clapcomp" -s d -l outdir -d "output directory"
+    complete -c clapcomp -n "__fish_using_command clapcomp" -s o -l outfile -d "output file"
+    complete -c clapcomp -n "__fish_using_command clapcomp" -l stdout -d "output result to STDOUT"
+    complete -c clapcomp -n "__fish_using_command clapcomp" -s h -l help -d "Prints help information"
+    complete -c clapcomp -n "__fish_using_command clapcomp" -s V -l version -d "Prints version information"
 
 
 Information About Binary
@@ -170,9 +194,9 @@ x86_64, Linux (build on Arch Linux)
 +----------+---------+------------+--------------+-----------+
 | Filename | Version | Stripped ? | Size (Bytes) | Size (MB) |
 +----------+---------+------------+--------------+-----------+
-| clapcomp | v0.1.1  | No         | 1453952      | 1.4M      |
+| clapcomp | v0.1.3  | No         | 1493720      | 1.5M      |
 +----------+---------+------------+--------------+-----------+
-| clapcomp | v0.1.1  | Yes        | 1089672      | 1.1M      |
+| clapcomp | v0.1.3  | Yes        | 1109608      | 1.1M      |
 +----------+---------+------------+--------------+-----------+
 
 
@@ -181,9 +205,9 @@ x86_64, Linux, musl (build on Arch Linux)
 +----------+---------+------------+--------------+-----------+
 | Filename | Version | Stripped ? | Size (Bytes) | Size (MB) |
 +----------+---------+------------+--------------+-----------+
-| clapcomp | v0.1.1  | No         | 1428512      | 1.4M      |
+| clapcomp | v0.1.3  | No         | 1860216      | 1.8M      |
 +----------+---------+------------+--------------+-----------+
-| clapcomp | v0.1.1  | Yes        | 1136928      | 1.1M      |
+| clapcomp | v0.1.3  | Yes        | 1206344      | 1.2M      |
 +----------+---------+------------+--------------+-----------+
 
 
@@ -221,7 +245,16 @@ Not Implemented Yet (Plan)
 * support generate from raw help message
 
 
-v0.1.2
+v0.1.3 (2016-10-29)
+------------------------------
+
+Features
+++++++++++++++++++++
+
+* new fish completion
+
+
+v0.1.2 (2016-08-03)
 ------------------------------
 
 Features
