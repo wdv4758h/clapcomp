@@ -38,10 +38,10 @@ Download Prebuilt Binary
 .. code-block:: sh
 
     # by curl
-    $ curl -O -J -L https://github.com/wdv4758h/clapcomp/releases/download/v0.1.3/clapcomp-v0.1.3-x86_64-unknown-linux-gnu.tar.gz
+    $ curl -O -J -L https://github.com/wdv4758h/clapcomp/releases/download/v0.1.4/clapcomp-v0.1.4-x86_64-unknown-linux-gnu.tar.gz
 
     # by wget
-    $ wget https://github.com/wdv4758h/clapcomp/releases/download/v0.1.3/clapcomp-v0.1.3-x86_64-unknown-linux-gnu.tar.gz
+    $ wget https://github.com/wdv4758h/clapcomp/releases/download/v0.1.4/clapcomp-v0.1.4-x86_64-unknown-linux-gnu.tar.gz
 
 
 
@@ -51,7 +51,7 @@ Usage
 .. code-block:: sh
 
     $ clapcomp --help
-    clapcomp 0.1.3
+    clapcomp 0.1.4
     clap completion generator as command
 
     USAGE:
@@ -67,7 +67,7 @@ Usage
         -d, --outdir <outdir>      output directory
         -o, --outfile <outfile>    output file
         -s, --shell <shell>        target shell for completion [default: bash]  [values: bash,
-                                   fish]
+                                   fish, zsh, powershell]
 
     ARGS:
         <input>    input file
@@ -75,8 +75,8 @@ Usage
 
 .. code-block:: sh
 
-    # src/arguments.yml is this project's setting
-    $ clapcomp src/arguments.yml --shell bash
+    # src/cli.yml.yml is this project's setting
+    $ clapcomp src/cli.yml.yml --shell bash
     $ cat clapcomp.bash-completion
     _clapcomp() {
         local i cur prev opts cmds
@@ -158,8 +158,8 @@ Usage
 
 .. code-block:: sh
 
-    # src/arguments.yml is this project's setting
-    $ clapcomp src/arguments.yml --shell fish
+    # src/cli.yml.yml is this project's setting
+    $ clapcomp src/cli.yml.yml --shell fish
     $ cat clapcomp.fish
     function __fish_using_command
         set cmd (commandline -opc)
@@ -183,6 +183,12 @@ Usage
     complete -c clapcomp -n "__fish_using_command clapcomp" -s V -l version -d "Prints version information"
 
 
+.. code-block:: sh
+
+    $ clapcomp src/cli.yml.yml --shell bash fish zsh powershell
+
+
+
 Information About Binary
 ========================================
 
@@ -194,9 +200,9 @@ x86_64, Linux (build on Arch Linux)
 +----------+---------+------------+--------------+-----------+
 | Filename | Version | Stripped ? | Size (Bytes) | Size (MB) |
 +----------+---------+------------+--------------+-----------+
-| clapcomp | v0.1.3  | No         | 1493720      | 1.5M      |
+| clapcomp | v0.1.4  | No         | 1999264      | 2.0M      |
 +----------+---------+------------+--------------+-----------+
-| clapcomp | v0.1.3  | Yes        | 1109608      | 1.1M      |
+| clapcomp | v0.1.4  | Yes        | 1166952      | 1.2M      |
 +----------+---------+------------+--------------+-----------+
 
 
@@ -205,9 +211,9 @@ x86_64, Linux, musl (build on Arch Linux)
 +----------+---------+------------+--------------+-----------+
 | Filename | Version | Stripped ? | Size (Bytes) | Size (MB) |
 +----------+---------+------------+--------------+-----------+
-| clapcomp | v0.1.3  | No         | 1860216      | 1.8M      |
+| clapcomp | v0.1.4  | No         | 2361584      | 2.3M      |
 +----------+---------+------------+--------------+-----------+
-| clapcomp | v0.1.3  | Yes        | 1206344      | 1.2M      |
+| clapcomp | v0.1.4  | Yes        | 1259592      | 1.3M      |
 +----------+---------+------------+--------------+-----------+
 
 
@@ -241,8 +247,17 @@ Changelog
 Not Implemented Yet (Plan)
 ------------------------------
 
-* support `zsh <http://www.zsh.org/>`_
 * support generate from raw help message
+
+
+v0.1.4 (2016-12-10)
+------------------------------
+
+Features
+++++++++++++++++++++
+
+* support `zsh <http://www.zsh.org/>`_
+* support powershell
 
 
 v0.1.3 (2016-10-29)
@@ -297,7 +312,7 @@ Developement
 Making Release
 ------------------------------
 
-1. update version in ``src/arguments.yml``
+1. update version in ``src/cli.yml``
 2. update version in ``Cargo.toml``
 3. update version in ``Cargo.lock``
 4. add git tag
