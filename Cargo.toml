@@ -1,6 +1,6 @@
 [package]
 name = "clapcomp"
-version = "0.1.3"
+version = "0.1.4"
 authors = ["Chiu-Hsiang Hsu <wdv4758h@gmail.com>"]
 license = "MIT"
 readme = "README.rst"
@@ -9,7 +9,7 @@ repository = "https://github.com/wdv4758h/clapcomp/"
 keywords = ["clap", "completion"]
 
 [dependencies]
-clap = { version = "2.16.2", features = ["yaml"] }
+clap = { version = "2.19.2", features = ["yaml"] }
 
 [profile.release]
 lto = true

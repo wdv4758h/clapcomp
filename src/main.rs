@@ -15,7 +15,7 @@ fn main() {
     // Parse Arguments
     ////////////////////
 
-    let yml = load_yaml!("arguments.yml");
+    let yml = load_yaml!("cli.yml");
     let arguments = App::from_yaml(yml).get_matches();
 
     let format = arguments.value_of("format").unwrap();
@@ -51,6 +51,8 @@ fn main() {
               .map(|s| match s {
                     &"bash" => Shell::Bash,
                     &"fish" => Shell::Fish,
+                    &"zsh" => Shell::Zsh,
+                    &"powershell" => Shell::PowerShell,
                     _ => unreachable!(),
                  })
               .collect::<Vec<_>>();
