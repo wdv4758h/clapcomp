@@ -38,10 +38,10 @@ Download Prebuilt Binary
 .. code-block:: sh
 
     # by curl
-    $ curl -O -J -L https://github.com/wdv4758h/clapcomp/releases/download/v0.1.4/clapcomp-v0.1.4-x86_64-unknown-linux-gnu.tar.gz
+    $ curl -O -J -L https://github.com/wdv4758h/clapcomp/releases/download/v0.1.5/clapcomp-v0.1.5-x86_64-unknown-linux-gnu.tar.gz
 
     # by wget
-    $ wget https://github.com/wdv4758h/clapcomp/releases/download/v0.1.4/clapcomp-v0.1.4-x86_64-unknown-linux-gnu.tar.gz
+    $ wget https://github.com/wdv4758h/clapcomp/releases/download/v0.1.5/clapcomp-v0.1.5-x86_64-unknown-linux-gnu.tar.gz
 
 
 
@@ -51,7 +51,7 @@ Usage
 .. code-block:: sh
 
     $ clapcomp --help
-    clapcomp 0.1.4
+    clapcomp 0.1.5
     clap completion generator as command
 
     USAGE:
@@ -200,9 +200,9 @@ x86_64, Linux (build on Arch Linux)
 +----------+---------+------------+--------------+-----------+
 | Filename | Version | Stripped ? | Size (Bytes) | Size (MB) |
 +----------+---------+------------+--------------+-----------+
-| clapcomp | v0.1.4  | No         | 1999264      | 2.0M      |
+| clapcomp | v0.1.5  | No         | 3475304      | 3.4M      |
 +----------+---------+------------+--------------+-----------+
-| clapcomp | v0.1.4  | Yes        | 1166952      | 1.2M      |
+| clapcomp | v0.1.5  | Yes        | 1142296      | 1.1M      |
 +----------+---------+------------+--------------+-----------+
 
 
@@ -211,9 +211,9 @@ x86_64, Linux, musl (build on Arch Linux)
 +----------+---------+------------+--------------+-----------+
 | Filename | Version | Stripped ? | Size (Bytes) | Size (MB) |
 +----------+---------+------------+--------------+-----------+
-| clapcomp | v0.1.4  | No         | 2361584      | 2.3M      |
+| clapcomp | v0.1.5  | No         | 3413112      | 3.3M      |
 +----------+---------+------------+--------------+-----------+
-| clapcomp | v0.1.4  | Yes        | 1259592      | 1.3M      |
+| clapcomp | v0.1.5  | Yes        | 1185832      | 1.2M      |
 +----------+---------+------------+--------------+-----------+
 
 
@@ -248,6 +248,15 @@ Not Implemented Yet (Plan)
 ------------------------------
 
 * support generate from raw help message
+
+
+v0.1.5 (2017-01-18)
+------------------------------
+
+Misc
+++++++++++++++++++++
+
+* update dependencies
 
 
 v0.1.4 (2016-12-10)
