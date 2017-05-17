@@ -38,9 +38,6 @@ args:
         long: outfile
         short: o
         takes_value: true
-    - stdout:
-        help: output result to STDOUT
-        long: stdout
     - input:
         help: input file
         index: 1
