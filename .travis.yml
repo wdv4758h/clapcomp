@@ -96,7 +96,6 @@ branches:
     # release tags
     - /^v\d+\.\d+\.\d+.*$/
     - master
-    - fix_ci
 
 notifications:
   email:
