@@ -21,9 +21,8 @@ fn main() {
     let format = arguments.value_of("format").unwrap();
     let mut shells = arguments.values_of("shell").unwrap().collect::<Vec<_>>();
     let file = arguments.value_of("input").unwrap();
-    let outdir = arguments.value_of("outdir").unwrap_or(".");
     let outfile = arguments.value_of("outfile").unwrap_or("");
-    let stdout = arguments.is_present("stdout");
+    let outdir = arguments.value_of("outdir");
 
     shells.sort();
     shells.dedup();
@@ -32,9 +31,11 @@ fn main() {
     // Extra Checking
     ////////////////////
 
-    if !stdout && !Path::new(outdir).is_dir() {
-        println!("You should pass in a exsiting directory");
-        panic!();
+    if let Some(outdir) = outdir {
+        if !Path::new(outdir).is_dir() {
+            println!("You should pass in a existing directory");
+            panic!();
+        }
     }
 
     if shells.len() > 1 && !outfile.is_empty() {
@@ -77,18 +78,18 @@ fn main() {
     ////////////////////
 
     for shell in shells {
-        if stdout {
-            app.gen_completions_to(name.as_str(),  // bin name
-                                   shell,          // target shell
-                                   &mut io::stdout());
+        if let Some(outdir) = outdir {
+            app.gen_completions(name.as_str(),  // bin name
+                                shell,          // target shell
+                                outdir);        // writing path
         } else if !outfile.is_empty() {
             app.gen_completions_to(name.as_str(),  // bin name
                                    shell,          // target shell
                                    &mut File::create(outfile).unwrap());
         } else {
-            app.gen_completions(name.as_str(),  // bin name
-                                shell,          // target shell
-                                outdir);        // writing path
+            app.gen_completions_to(name.as_str(),  // bin name
+                                   shell,          // target shell
+                                   &mut io::stdout());
         }
     }
 }
